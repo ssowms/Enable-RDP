@@ -4,4 +4,4 @@ https://www.howtogeek.com/175087/how-to-enable-and-secure-remote-desktop-on-wind
 
 **Execution Step**
 
-Enable-Rdp-With-Security -ComputerName "Computer Name"
+Enable-Rdp-With-Security -ComputerName "Computer Name" -UserName "User Name"
