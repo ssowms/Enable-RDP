@@ -7,17 +7,17 @@ function Enable-Rdp-With-Security{
         Enable RDP connection with all security options
     #>
     param (
-        [string] $ComputerName
+        [string] $ComputerName,
+        [string] $UserName
     )
     Import-Module -Name PolicyFileEditor
 
-    # $ComputerName = "DESKTOP-4HP932V"
     # Step-1 Enable RDP with NLA option 
     Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server'-name "fDenyTSConnections" -Value 0
     (Get-WmiObject -class "Win32_TSGeneralSetting" -Namespace root\cimv2\terminalservices -ComputerName $ComputerName -Filter "TerminalName='RDP-tcp'").SetUserAuthenticationRequired(1)
     # Step-2 Add Users
-    if(((Get-LocalGroupMember -Group "Remote Desktop Users").Name  -contains "$ComputerName\Selva") -eq $false){
-        Add-LocalGroupMember -Group "Remote Desktop Users" -Member "$ComputerName\Selva"
+    if(((Get-LocalGroupMember -Group "Remote Desktop Users").Name  -contains "$ComputerName\$UserName") -eq $false){
+        Add-LocalGroupMember -Group "Remote Desktop Users" -Member "$ComputerName\$UserName"
     }
 
    # Step 3- Add users in Users Right Assignment - Local Policies
@@ -75,4 +75,4 @@ function Replace-SecurityTest([string[]]$Usernames,[string]$SecuritySetting, $Sa
         }
     }
 }
-Enable-Rdp-With-Security -ComputerName "Computer Name"
+Enable-Rdp-With-Security -ComputerName "Computer Name" -UserName "User Name"
