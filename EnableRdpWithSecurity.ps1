@@ -75,4 +75,4 @@ function Replace-SecurityTest([string[]]$Usernames,[string]$SecuritySetting, $Sa
         }
     }
 }
-Enable-Rdp-With-Security -ComputerName "DESKTOP-4HP932V"
+Enable-Rdp-With-Security -ComputerName "Computer Name"
